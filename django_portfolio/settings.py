@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'zu8ht9c#m60nw1gj82ul5_5h51hr5xoxm2l5t*+4g)u1l=(#n&'
+SECRET_KEY = os.environ.get('SECRET_KEY', "dev-secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -117,13 +117,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
 ANYMAIL = {
     # (exact settings here depend on your ESP...)
-    "MAILGUN_API_KEY": "key-c65a0215370f9ea2d0f14fad03803aa7",
+    "MAILGUN_API_KEY": os.environ.get('MAILGUN_API_KEY'),
     "MAILGUN_SENDER_DOMAIN":
-    'sandbox8d3f7045f73e4171b813bb268ab8c95a.mailgun.org',  # your Mailgun domain, if needed
+    os.environ.get('MAILGUN_SENDER_DOMAIN'),  # your Mailgun domain, if needed
 }
 
 EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
